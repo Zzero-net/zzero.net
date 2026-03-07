@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero — Frictionless Stablecoin Microtransactions</title>
+<meta name="description" content="Zero is a permissionless, decentralized stablecoin transfer network for users and AI agents. 1 Z = $0.01. Sub-second finality. 100-byte transactions.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⓪</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #0f0f0f;
+  --border: #1a1a1a;
+  --green: #00ff41;
+  --green-dim: #00cc33;
+  --green-glow: rgba(0, 255, 65, 0.15);
+  --cyan: #00d4ff;
+  --amber: #ffb000;
+  --text: #c0c0c0;
+  --text-dim: #606060;
+  --white: #e0e0e0;
+  --red: #ff3333;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.015) 2px,
+    rgba(0, 255, 65, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Grid background */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    linear-gradient(rgba(0,255,65,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,65,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+a { color: var(--green); text-decoration: none; transition: all 0.2s; }
+a:hover { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(10,10,10,0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 0 24px;
+}
+nav .nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+nav .logo {
+  font-size: 1.3rem; font-weight: 700; color: var(--green);
+  letter-spacing: 2px; text-transform: uppercase;
+}
+nav .logo span { color: var(--text-dim); font-weight: 300; }
+nav ul { list-style: none; display: flex; gap: 28px; }
+nav ul a { color: var(--text-dim); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+nav ul a:hover { color: var(--green); }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+}
+.hero-content { max-width: 800px; }
+.hero .tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  color: var(--amber);
+  border: 1px solid rgba(255,176,0,0.3);
+  padding: 4px 12px;
+  border-radius: 2px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+.hero h1 .z {
+  color: var(--green);
+  text-shadow: 0 0 30px var(--green-glow), 0 0 60px var(--green-glow);
+}
+.hero .subtitle {
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+.hero .subtitle strong { color: var(--white); }
+
+.hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  border: 1px solid var(--green);
+  color: var(--green);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+.btn:hover {
+  background: var(--green);
+  color: var(--bg);
+  box-shadow: 0 0 20px var(--green-glow);
+}
+.btn-secondary { border-color: var(--border); color: var(--text); }
+.btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); background: transparent; box-shadow: 0 0 20px rgba(0,212,255,0.1); }
+
+/* Terminal prompt */
+.terminal-prompt {
+  margin-top: 48px;
+  text-align: left;
+  display: inline-block;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px 28px;
+  font-size: 0.85rem;
+  max-width: 520px;
+  width: 100%;
+}
+.terminal-prompt .line { margin-bottom: 4px; }
+.terminal-prompt .prompt { color: var(--green); }
+.terminal-prompt .cmd { color: var(--white); }
+.terminal-prompt .output { color: var(--text-dim); }
+.terminal-prompt .highlight { color: var(--amber); }
+
+/* ===== STATS BAR ===== */
+.stats-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 0;
+  background: var(--bg-card);
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+  text-align: center;
+}
+.stat-item .stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--green);
+}
+.stat-item .stat-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ===== SECTIONS ===== */
+section { padding: 80px 0; }
+.section-label {
+  font-size: 0.65rem;
+  color: var(--amber);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.section-desc {
+  color: var(--text);
+  max-width: 600px;
+  margin-bottom: 48px;
+  font-size: 0.9rem;
+}
+
+/* ===== HOW IT WORKS ===== */
+.flow-diagram {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+}
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.flow-step:last-child { margin-bottom: 0; }
+.flow-num {
+  color: var(--green);
+  font-weight: 700;
+  min-width: 28px;
+}
+.flow-label { color: var(--amber); font-weight: 500; min-width: 100px; }
+.flow-detail { color: var(--text); }
+.flow-arrow { color: var(--text-dim); margin: 0 8px; }
+
+/* ===== FEATURES GRID ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  transition: border-color 0.3s;
+}
+.feature-card:hover { border-color: var(--green); }
+.feature-card .feature-icon {
+  font-size: 0.75rem;
+  color: var(--green);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.feature-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--white);
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+.feature-card p {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.comparison-table th, .comparison-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.comparison-table th {
+  color: var(--text-dim);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  background: rgba(0,255,65,0.03);
+}
+.comparison-table td { color: var(--text); }
+.comparison-table tr:last-child td { border-bottom: none; }
+.comparison-table .highlight-row td { color: var(--green); font-weight: 500; }
+.comparison-table .dim { color: var(--text-dim); }
+
+/* ===== CODE BLOCKS ===== */
+.code-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  font-size: 0.82rem;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.code-block .comment { color: var(--text-dim); }
+.code-block .keyword { color: var(--cyan); }
+.code-block .string { color: var(--green); }
+.code-block .func { color: var(--amber); }
+.code-block .num { color: var(--red); }
+
+/* ===== ECOSYSTEM ===== */
+.eco-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.eco-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.eco-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+.eco-card h4 { color: var(--white); font-size: 0.95rem; margin-bottom: 6px; }
+.eco-card p { color: var(--text-dim); font-size: 0.75rem; }
+.eco-card .eco-link { display: block; margin-top: 12px; font-size: 0.75rem; color: var(--green); }
+
+/* ===== AGENT SECTION ===== */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ===== FOOTER ===== */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+  text-align: center;
+}
+footer .footer-links {
+  display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+footer .footer-links a { color: var(--text-dim); font-size: 0.8rem; }
+footer .footer-links a:hover { color: var(--green); }
+footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+.cursor { animation: blink 1s infinite; color: var(--green); }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate { animation: fadeInUp 0.6s ease forwards; opacity: 0; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav ul { display: none; }
+  .hero h1 { font-size: 2.5rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .comparison-table { font-size: 0.72rem; }
+  .comparison-table th, .comparison-table td { padding: 10px 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">ZERO <span>network</span></a>
+    <ul>
+      <li><a href="https://docs.zzero.net">docs</a></li>
+      <li><a href="https://explorer.zzero.net">explorer</a></li>
+      <li><a href="https://mcp.zzero.net">mcp</a></li>
+      <li><a href="https://github.com/TEB1157" target="_blank">github</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="tag animate">Permissionless Stablecoin Network</div>
+    <h1 class="animate delay-1"><span class="z">Z</span>ero</h1>
+    <p class="subtitle animate delay-2">
+      Move pennies at the speed of light.<br>
+      A <strong>frictionless microtransaction network</strong> for users and AI agents.<br>
+      1 Z = $0.01. Sub-second finality. 100-byte transactions.
+    </p>
+    <div class="hero-buttons animate delay-3">
+      <a href="https://docs.zzero.net" class="btn">Read the Docs</a>
+      <a href="https://github.com/TEB1157" class="btn btn-secondary" target="_blank">View Source</a>
+    </div>
+    <div class="terminal-prompt animate delay-4">
+      <div class="line"><span class="prompt">$</span> <span class="cmd">zero send 10 --to zr_agent_42</span></div>
+      <div class="line"><span class="output">Sent <span class="highlight">0.10 Z</span> ($0.001) to zr_agent_42</span></div>
+      <div class="line"><span class="output">TX: zr_8f3a...2b1c  Finality: <span class="highlight">247ms</span></span></div>
+      <div class="line"><span class="output">Fee: 0.01 Z  Balance: 489.89 Z</span></div>
+      <div class="line"><span class="prompt">$</span> <span class="cursor">_</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">$0.01</div>
+        <div class="stat-label">1 Zero Token</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">&lt;500ms</div>
+        <div class="stat-label">Finality</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">100B</div>
+        <div class="stat-label">Transaction Size</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">$0.0001</div>
+        <div class="stat-label">Flat Fee</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1M+</div>
+        <div class="stat-label">Target TPS</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY ZERO -->
+<section id="why">
+  <div class="container">
+    <div class="section-label">// The Problem</div>
+    <h2 class="section-title">Why Zero Exists</h2>
+    <p class="section-desc">
+      AI agents are proliferating. They need to pay for API calls, data, compute, and each other's services.
+      These transactions are tiny, frequent, automated, and time-sensitive. No existing payment system handles this.
+    </p>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Credit Cards</th>
+          <th>Ethereum</th>
+          <th>Solana/Base</th>
+          <th>Zero</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Min Fee</td>
+          <td class="dim">$0.30</td>
+          <td class="dim">$0.50+</td>
+          <td class="dim">$0.00025+</td>
+          <td class="highlight-row" style="color:var(--green)">$0.0001 flat</td>
+        </tr>
+        <tr>
+          <td>Finality</td>
+          <td class="dim">Days</td>
+          <td class="dim">12 min</td>
+          <td class="dim">2-12s</td>
+          <td style="color:var(--green)">&lt;500ms</td>
+        </tr>
+        <tr>
+          <td>Tx Size</td>
+          <td class="dim">N/A</td>
+          <td class="dim">~110B + gas</td>
+          <td class="dim">~200B</td>
+          <td style="color:var(--green)">100 bytes</td>
+        </tr>
+        <tr>
+          <td>Gas Token Needed</td>
+          <td class="dim">N/A</td>
+          <td class="dim">ETH (volatile)</td>
+          <td class="dim">ETH/SOL</td>
+          <td style="color:var(--green)">No. Z IS the currency.</td>
+        </tr>
+        <tr>
+          <td>Smart Contracts</td>
+          <td class="dim">N/A</td>
+          <td class="dim">Yes (attack surface)</td>
+          <td class="dim">Yes</td>
+          <td style="color:var(--green)">None. Transfer only.</td>
+        </tr>
+        <tr>
+          <td>Agent-Native</td>
+          <td class="dim">No</td>
+          <td class="dim">No</td>
+          <td class="dim">Partially</td>
+          <td style="color:var(--green)">Yes. API-first.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">// Protocol</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-desc">Bridge in USDC. Transact millions of times. Bridge out.</p>
+    <div class="flow-diagram">
+      <div class="flow-step">
+        <span class="flow-num">01</span>
+        <span class="flow-label">BRIDGE IN</span>
+        <span class="flow-detail">Lock 5 USDC in vault on Ethereum/Arbitrum/Base/Solana <span class="flow-arrow">-></span> Mint 500 Z</span>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">02</span>
+        <span class="flow-label">TRANSACT</span>
+        <span class="flow-detail">Send Z to any address. 0.01 Z flat fee. &lt;500ms finality. 100 bytes on wire.</span>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">03</span>
+        <span class="flow-label">BRIDGE OUT</span>
+        <span class="flow-detail">Burn 450 Z <span class="flow-arrow">-></span> Release 4.50 USDC on any supported L2</span>
+      </div>
+    </div>
+    <div style="margin-top: 24px; font-size: 0.8rem; color: var(--text-dim);">
+      Rate: 1 USDC = 100 Z &nbsp;|&nbsp; 1 Z = $0.01 &nbsp;|&nbsp; Min: 0.01 Z &nbsp;|&nbsp; Max per tx: 25 Z ($0.25)
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">// Architecture</div>
+    <h2 class="section-title">Built Different</h2>
+    <p class="section-desc">One network. One token. One purpose. Move pennies faster than anything else.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">[ BLOCK-LATTICE ]</div>
+        <h3>Per-Account Chains</h3>
+        <p>Each account has its own chain. Alice sending to Bob never blocks Carol sending to Dave. Inherently parallel. Throughput scales with accounts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">[ DAG-BFT ]</div>
+        <h3>Leaderless Consensus</h3>
+        <p>DAG-based asynchronous BFT. No single leader. No bottleneck. Validators produce events independently. Finality when 2/3+ validators build on top.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">[ RING BUFFER ]</div>
+        <h3>Zero Bloat</h3>
+        <p>Validators use ~100 GB forever. Ring buffer transfer log continuously evicts old data. After a trillion transactions, storage stays constant.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">[ STABLECOIN ]</div>
+        <h3>1:1 USDC Backed</h3>
+        <p>Every Z token is backed by USDC/USDT locked in auditable vault contracts. No volatility. No speculation. 1 Z = $0.01, always.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">[ PERMISSIONLESS ]</div>
+        <h3>Open Network</h3>
+        <p>Anyone creates an account (just a keypair). Anyone runs a validator (stake Z). Validators earn 100% of fees. No foundation take.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">[ AGENT-NATIVE ]</div>
+        <h3>4-Line Wallet</h3>
+        <p>Generate keypair. Bridge in USDC. Send Z. Done. No gas estimation, no nonce management, no chain IDs. x402 compatible out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CODE EXAMPLE -->
+<section id="code" style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">// Integration</div>
+    <h2 class="section-title">Build in Minutes</h2>
+    <p class="section-desc">An AI agent can set up a wallet and start transacting in 4 lines of code.</p>
+    <div class="two-col">
+      <div>
+        <div style="font-size: 0.75rem; color: var(--amber); margin-bottom: 8px; letter-spacing: 1px;">PYTHON SDK</div>
+        <div class="code-block">
+<span class="keyword">from</span> zero <span class="keyword">import</span> Wallet
+
+w = Wallet.<span class="func">from_env</span>()         <span class="comment"># reads ZERO_KEY env var</span>
+w.<span class="func">send</span>(<span class="string">"zr_recipient"</span>, <span class="num">10</span>)  <span class="comment"># send 0.10 Z, fee: 0.01 Z</span>
+<span class="keyword">print</span>(w.<span class="func">balance</span>())           <span class="comment"># 489.89 Z</span>
+        </div>
+        <div style="font-size: 0.75rem; color: var(--amber); margin-bottom: 8px; letter-spacing: 1px;">x402 PAYWALL</div>
+        <div class="code-block">
+<span class="keyword">from</span> zero.x402 <span class="keyword">import</span> paywall
+
+<span class="keyword">@</span>app.<span class="func">get</span>(<span class="string">"/api/search"</span>)
+<span class="keyword">@</span><span class="func">paywall</span>(amount=<span class="num">10</span>, address=<span class="string">"zr_merchant"</span>)
+<span class="keyword">async def</span> <span class="func">search</span>(q: str):
+    <span class="keyword">return</span> <span class="func">do_search</span>(q)
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 0.75rem; color: var(--amber); margin-bottom: 8px; letter-spacing: 1px;">JAVASCRIPT SDK</div>
+        <div class="code-block">
+<span class="keyword">import</span> { Wallet } <span class="keyword">from</span> <span class="string">'@zero-network/sdk'</span>;
+
+<span class="keyword">const</span> w = Wallet.<span class="func">fromEnv</span>();
+<span class="keyword">await</span> w.<span class="func">send</span>(<span class="string">'zr_recipient'</span>, <span class="num">10</span>);
+console.<span class="func">log</span>(<span class="keyword">await</span> w.<span class="func">balance</span>());
+        </div>
+        <div style="font-size: 0.75rem; color: var(--amber); margin-bottom: 8px; letter-spacing: 1px;">CHAT WALLET</div>
+        <div class="code-block">
+<span class="prompt" style="color:var(--green)">></span> <span class="cmd" style="color:var(--white)">/zero balance</span>
+<span class="output" style="color:var(--text)">489.89 Z ($4.8989)</span>
+
+<span class="prompt" style="color:var(--green)">></span> <span class="cmd" style="color:var(--white)">/zero send 0.50 to zr_api_provider</span>
+<span class="output" style="color:var(--text)">Sent 0.50 Z. TX: zr_a1b2. Balance: 489.39 Z</span>
+
+<span class="prompt" style="color:var(--green)">></span> <span class="cmd" style="color:var(--white)">/zero bridge-in 5 USDC from arbitrum</span>
+<span class="output" style="color:var(--text)">Bridging... 500 Z received. Balance: 989.39 Z</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSACTION FORMAT -->
+<section>
+  <div class="container">
+    <div class="section-label">// Wire Format</div>
+    <h2 class="section-title">100 Bytes. Nothing More.</h2>
+    <p class="section-desc">No opcodes. No gas. No contract addresses. No calldata. Just: move X pennies from A to B.</p>
+    <div class="code-block" style="max-width: 600px;">
+<span class="keyword">ZeroTransfer</span> {
+    from:      [<span class="num">32</span> bytes]  <span class="comment">// Ed25519 public key</span>
+    to:        [<span class="num">32</span> bytes]  <span class="comment">// Ed25519 public key</span>
+    amount:    [<span class="num"> 4</span> bytes]  <span class="comment">// u32, penny units</span>
+    nonce:     [<span class="num"> 4</span> bytes]  <span class="comment">// u32, replay protection</span>
+    signature: [<span class="num">28</span> bytes]  <span class="comment">// Ed25519 truncated</span>
+}
+<span class="comment">// Total: 100 bytes</span>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">// Ecosystem</div>
+    <h2 class="section-title">Explore Zero</h2>
+    <div class="eco-grid">
+      <a href="https://docs.zzero.net" class="eco-card">
+        <h4>Documentation</h4>
+        <p>Architecture, protocol, SDK reference, and integration guides</p>
+        <span class="eco-link">docs.zzero.net -></span>
+      </a>
+      <a href="https://explorer.zzero.net" class="eco-card">
+        <h4>Explorer</h4>
+        <p>Network stats, transactions, accounts, and validator status</p>
+        <span class="eco-link">explorer.zzero.net -></span>
+      </a>
+      <a href="https://mcp.zzero.net" class="eco-card">
+        <h4>MCP Integration</h4>
+        <p>Model Context Protocol payment tools for AI agents</p>
+        <span class="eco-link">mcp.zzero.net -></span>
+      </a>
+      <a href="https://github.com/TEB1157" class="eco-card" target="_blank">
+        <h4>GitHub</h4>
+        <p>Source code, SDKs, examples, and protocol specifications</p>
+        <span class="eco-link">github.com/TEB1157 -></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- VALIDATOR -->
+<section>
+  <div class="container">
+    <div class="section-label">// Validators</div>
+    <h2 class="section-title">Run a Validator</h2>
+    <p class="section-desc">
+      $30/month VPS. 4 cores, 16 GB RAM, 256 GB NVMe. Earn 100% of network fees.
+    </p>
+    <div class="code-block" style="max-width: 500px;">
+<span class="comment"># Install and run</span>
+<span class="prompt" style="color:var(--green)">$</span> curl -sSf https://install.zzero.net | sh
+<span class="prompt" style="color:var(--green)">$</span> zero-node init --stake-key /path/to/key
+<span class="prompt" style="color:var(--green)">$</span> zero-node run
+
+<span class="comment"># That's it. You're validating.</span>
+    </div>
+    <div style="margin-top: 24px;">
+      <table class="comparison-table" style="max-width: 500px;">
+        <thead><tr><th>Daily Transactions</th><th>Revenue per Validator</th></tr></thead>
+        <tbody>
+          <tr><td>100M</td><td style="color:var(--green)">$100/day (100 validators)</td></tr>
+          <tr><td>1B</td><td style="color:var(--green)">$1,000/day</td></tr>
+          <tr><td>10B</td><td style="color:var(--green)">$10,000/day</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="https://docs.zzero.net">Documentation</a>
+      <a href="https://explorer.zzero.net">Explorer</a>
+      <a href="https://mcp.zzero.net">MCP</a>
+      <a href="https://github.com/TEB1157" target="_blank">GitHub</a>
+    </div>
+    <div class="copyright">
+      ZERO NETWORK // 1 Z = $0.01 // Permissionless Stablecoin Microtransactions
+    </div>
+  </div>
+</footer>
+
+<script>
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feature-card, .eco-card, .flow-step').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

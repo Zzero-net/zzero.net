@@ -738,6 +738,247 @@ console.<span class="func">log</span>(<span class="keyword">await</span> w.<span
   </div>
 </section>
 
+<!-- USE CASES -->
+<section style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">// Use Cases</div>
+    <h2 class="section-title">What You Can Build</h2>
+    <p class="section-desc">A frictionless penny-value layer unlocks transactions that were never economically viable before.</p>
+    <div class="use-case-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 32px;">
+
+      <div class="use-case-category">
+        <h3 style="color:var(--green); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 1px;">AGENT-TO-AGENT</h3>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Task Delegation</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Agent A pays Agent B 0.05 Z to summarize a document, translate text, or classify data</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Swarm Coordination</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Orchestrator pays worker agents per subtask -- research, coding, testing -- each 0.02-0.10 Z</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Data Marketplace</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Agents sell real-time data feeds (weather, prices, sentiment) at 0.01 Z per query</div>
+        </div>
+      </div>
+
+      <div class="use-case-category">
+        <h3 style="color:var(--cyan); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 1px;">AGENT-TO-SERVICE</h3>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Pay-per-Call APIs</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">No API keys, no subscriptions. Pay 0.01-0.25 Z per call to any x402-enabled endpoint</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">MCP Tool Payments</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">AI agents pay for MCP server tools -- search, code execution, database queries -- per invocation</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Compute on Demand</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">GPU inference, code sandboxing, image generation -- pay per execution at penny scale</div>
+        </div>
+      </div>
+
+      <div class="use-case-category">
+        <h3 style="color:var(--amber); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 1px;">CONTENT & PUBLISHERS</h3>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Article Paywalls</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Read any article for 0.05 Z ($0.0005). No login, no subscription, no friction</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Streaming Micropayments</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Pay creators per second of audio/video. 0.01 Z per minute of content consumed</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">AI Training Data</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Content creators get paid 0.01 Z each time their data is used for training or RAG retrieval</div>
+        </div>
+      </div>
+
+      <div class="use-case-category">
+        <h3 style="color:var(--green); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 1px;">INFRASTRUCTURE</h3>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Bandwidth Markets</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Pay for CDN, proxy, or VPN bandwidth per MB transferred. No monthly commitment</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Storage Micro-Rent</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Rent storage per hour or per object. Pay 0.01 Z to pin a file for 24 hours</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">IoT Machine Payments</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Devices pay per sensor reading, per charge event, per unlock -- no billing infrastructure needed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR PROVIDERS -->
+<section>
+  <div class="container">
+    <div class="section-label">// For Providers</div>
+    <h2 class="section-title">Accept Zero Payments</h2>
+    <p class="section-desc">Three patterns to charge users and AI agents for your content, APIs, or MCP tools.</p>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 32px;">
+
+      <div>
+        <div style="font-size: 0.75rem; color: var(--green); margin-bottom: 8px; letter-spacing: 1px;">WEBSITE PAYWALL</div>
+        <div class="code-block">
+<span class="comment">// Drop-in paywall for any webpage</span>
+<span class="comment">// Returns 402 until paid, then serves content</span>
+
+<span class="keyword">app</span>.<span class="func">get</span>(<span class="string">'/article/:id'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">const</span> paid = <span class="keyword">await</span> zero.<span class="func">verifyPayment</span>(
+    req.headers[<span class="string">'x-zero-receipt'</span>]
+  );
+  <span class="keyword">if</span> (!paid) {
+    res.<span class="func">status</span>(<span class="num">402</span>).<span class="func">json</span>({
+      <span class="string">"x-402-version"</span>: <span class="num">1</span>,
+      <span class="string">"x-402-network"</span>: <span class="string">"zero"</span>,
+      <span class="string">"x-402-amount"</span>: <span class="num">5</span>,     <span class="comment">// 0.05 Z</span>
+      <span class="string">"x-402-address"</span>: <span class="string">"zr_pub..."</span>,
+      <span class="string">"x-402-description"</span>:
+        <span class="string">"Pay 0.05 Z to read"</span>
+    });
+    <span class="keyword">return</span>;
+  }
+  res.<span class="func">json</span>(article);
+});
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 0.75rem; color: var(--cyan); margin-bottom: 8px; letter-spacing: 1px;">API MIDDLEWARE</div>
+        <div class="code-block">
+<span class="comment"># Python: x402 middleware for FastAPI</span>
+<span class="comment"># One decorator to charge per endpoint</span>
+
+<span class="keyword">from</span> zero_sdk <span class="keyword">import</span> x402_gate
+
+<span class="func">@app.get</span>(<span class="string">"/api/sentiment"</span>)
+<span class="func">@x402_gate</span>(amount=<span class="num">1</span>)  <span class="comment"># 0.01 Z</span>
+<span class="keyword">async def</span> <span class="func">sentiment</span>(text: str):
+    <span class="keyword">return</span> analyze(text)
+
+<span class="func">@app.get</span>(<span class="string">"/api/translate"</span>)
+<span class="func">@x402_gate</span>(amount=<span class="num">3</span>)  <span class="comment"># 0.03 Z</span>
+<span class="keyword">async def</span> <span class="func">translate</span>(
+    text: str, lang: str
+):
+    <span class="keyword">return</span> do_translate(text, lang)
+
+<span class="comment"># Agents hit 402, pay, retry.</span>
+<span class="comment"># You get paid. No API keys.</span>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 0.75rem; color: var(--amber); margin-bottom: 8px; letter-spacing: 1px;">MCP SERVER</div>
+        <div class="code-block">
+<span class="comment"># MCP server with per-tool pricing</span>
+<span class="comment"># Agents discover prices, pay, use</span>
+
+<span class="func">@server.tool</span>(
+    name=<span class="string">"web_search"</span>,
+    zero_price=<span class="num">2</span>  <span class="comment"># 0.02 Z per call</span>
+)
+<span class="keyword">async def</span> <span class="func">search</span>(query: str):
+    <span class="keyword">return</span> search_web(query)
+
+<span class="func">@server.tool</span>(
+    name=<span class="string">"run_code"</span>,
+    zero_price=<span class="num">10</span>  <span class="comment"># 0.10 Z</span>
+)
+<span class="keyword">async def</span> <span class="func">run_code</span>(code: str):
+    <span class="keyword">return</span> sandbox_exec(code)
+
+<span class="comment"># Price advertised in tool schema</span>
+<span class="comment"># Agent pays before execution</span>
+<span class="comment"># Receipt verified automatically</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENT FLOW -->
+<section style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">// Agent Perspective</div>
+    <h2 class="section-title">How Agents Pay</h2>
+    <p class="section-desc">When an AI agent encounters a Zero-gated resource, the payment flow is automatic.</p>
+
+    <div class="flow-steps" style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 32px; justify-content: center;">
+      <div class="flow-step" style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; min-width: 180px; max-width: 220px; text-align: center;">
+        <div style="color:var(--green); font-size: 1.5rem; margin-bottom: 8px;">1</div>
+        <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Request</div>
+        <div style="color:var(--text-dim); font-size: 0.8rem;">Agent calls API or MCP tool</div>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--text-dim);">-></div>
+      <div class="flow-step" style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; min-width: 180px; max-width: 220px; text-align: center;">
+        <div style="color:var(--cyan); font-size: 1.5rem; margin-bottom: 8px;">2</div>
+        <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">402 Received</div>
+        <div style="color:var(--text-dim); font-size: 0.8rem;">Server returns price + address</div>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--text-dim);">-></div>
+      <div class="flow-step" style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; min-width: 180px; max-width: 220px; text-align: center;">
+        <div style="color:var(--amber); font-size: 1.5rem; margin-bottom: 8px;">3</div>
+        <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Auto-Pay</div>
+        <div style="color:var(--text-dim); font-size: 0.8rem;">SDK checks spending limit, sends Z</div>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--text-dim);">-></div>
+      <div class="flow-step" style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; min-width: 180px; max-width: 220px; text-align: center;">
+        <div style="color:var(--green); font-size: 1.5rem; margin-bottom: 8px;">4</div>
+        <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Access</div>
+        <div style="color:var(--text-dim); font-size: 0.8rem;">Receipt attached, content returned</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+      <div>
+        <div style="font-size: 0.75rem; color: var(--green); margin-bottom: 8px; letter-spacing: 1px;">AGENT SDK (AUTO-PAY)</div>
+        <div class="code-block">
+<span class="keyword">from</span> zero_sdk <span class="keyword">import</span> Wallet, x402_fetch
+
+w = Wallet.<span class="func">from_env</span>()
+
+<span class="comment"># Automatically handles 402 -> pay -> retry</span>
+result = <span class="keyword">await</span> <span class="func">x402_fetch</span>(
+    <span class="string">"https://api.example.com/data"</span>,
+    wallet=w,
+    max_price=<span class="num">25</span>  <span class="comment"># spending limit: 0.25 Z</span>
+)
+
+<span class="comment"># Agent never sees the payment flow</span>
+<span class="comment"># Just gets the data back</span>
+print(result.json())
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 0.75rem; color: var(--cyan); margin-bottom: 8px; letter-spacing: 1px;">MCP CLIENT (AUTO-PAY)</div>
+        <div class="code-block">
+<span class="comment">// Agent discovers tools with prices</span>
+<span class="keyword">const</span> tools = <span class="keyword">await</span> mcp.<span class="func">listTools</span>();
+<span class="comment">// -> [{name: "search", zero_price: 2},</span>
+<span class="comment">//     {name: "run_code", zero_price: 10}]</span>
+
+<span class="comment">// Call tool -- payment is automatic</span>
+<span class="keyword">const</span> result = <span class="keyword">await</span> mcp.<span class="func">callTool</span>(
+  <span class="string">"search"</span>,
+  { query: <span class="string">"latest AI research"</span> },
+  { wallet: w, maxPrice: <span class="num">5</span> }
+);
+
+<span class="comment">// 0.02 Z deducted, results returned</span>
+<span class="comment">// Spending limits enforced per-call</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ECOSYSTEM -->
 <section style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
@@ -840,7 +1081,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.feature-card, .eco-card, .flow-step').forEach(el => {
+document.querySelectorAll('.feature-card, .eco-card, .flow-step, .use-case-category').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';

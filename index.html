@@ -608,7 +608,7 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
       <div class="flow-step">
         <span class="flow-num">02</span>
         <span class="flow-label">TRANSACT</span>
-        <span class="flow-detail">Send Z to any address. 0.01 Z flat fee. &lt;500ms finality. 100 bytes on wire.</span>
+        <span class="flow-detail">Send 50 Z ($0.50) to any address. 0.01 Z flat fee. &lt;500ms finality. 100 bytes on wire.</span>
       </div>
       <div class="flow-step">
         <span class="flow-num">03</span>
@@ -663,6 +663,16 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
         <div class="feature-icon">[ AGENT-NATIVE ]</div>
         <h3>4-Line Wallet</h3>
         <p>Generate keypair. Bridge in USDC. Send Z. Done. No gas estimation, no nonce management, no chain IDs. MCP server payments built in.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">[ FLAT STORAGE ]</div>
+        <h3>No Merkle Tries</h3>
+        <p>Direct key-value lookups for account state. No tree traversals, no proof overhead. O(1) balance reads. Storage designed for throughput, not historical proofs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">[ TRANSFER-ONLY ]</div>
+        <h3>No Smart Contracts</h3>
+        <p>No VM. No opcodes. No reentrancy bugs. No gas estimation. The entire attack surface is one operation: move Z from A to B. Simplicity is security.</p>
       </div>
     </div>
   </div>
@@ -807,6 +817,38 @@ console.<span class="func">log</span>(<span class="keyword">await</span> w.<span
         <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
           <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">IoT Machine Payments</div>
           <div style="color:var(--text-dim); font-size: 0.85rem;">Devices pay per sensor reading, per charge event, per unlock -- no billing infrastructure needed</div>
+        </div>
+      </div>
+
+      <div class="use-case-category">
+        <h3 style="color:var(--cyan); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 1px;">GAMING & VIRTUAL</h3>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">In-Game Purchases</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Buy a skin for 0.10 Z, a power-up for 0.02 Z. No app store cut, no minimum purchase</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Player-to-Player Trading</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Trade items, tips, and bounties between players instantly. No escrow delays</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Tournament Entry</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Enter a tournament for 0.25 Z. Prize pool auto-distributes to winners on finality</div>
+        </div>
+      </div>
+
+      <div class="use-case-category">
+        <h3 style="color:var(--amber); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 1px;">SOCIAL & TIPPING</h3>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Micro-Tips</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Tip a post 0.01 Z, a comment 0.02 Z. Creators earn from every interaction, not just ads</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Pay-to-Message</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Charge 0.01 Z to DM a public figure. Eliminates spam, compensates attention</div>
+        </div>
+        <div class="use-case-item" style="margin-bottom: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color:var(--white); font-weight: 600; margin-bottom: 4px;">Bounties & Rewards</div>
+          <div style="color:var(--text-dim); font-size: 0.85rem;">Post a 0.25 Z bounty for the best answer. Community-driven Q&A with real incentives</div>
         </div>
       </div>
     </div>

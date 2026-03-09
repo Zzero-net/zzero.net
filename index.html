@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zero — Frictionless Stablecoin Microtransactions</title>
-<meta name="description" content="Zero is a permissionless, decentralized stablecoin transfer network for users and AI agents. 1 Z = $0.01. Sub-second finality. 100-byte transactions.">
+<meta name="description" content="Zero is a permissionless, decentralized stablecoin transfer network for users and AI agents. 1 Z = $0.01. Sub-second finality. 136-byte transactions.">
 <meta property="og:title" content="Zero Network — Frictionless Stablecoin Microtransactions">
-<meta property="og:description" content="1 Z = $0.01. Sub-second finality. 100-byte transactions. Built for users and AI agents.">
+<meta property="og:description" content="1 Z = $0.01. Sub-second finality. 136-byte transactions. Built for users and AI agents.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zzero.net">
 <meta property="og:site_name" content="Zero Network">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zero Network — Frictionless Stablecoin Microtransactions">
-<meta name="twitter:description" content="1 Z = $0.01. Sub-second finality. 100-byte transactions. Built for users and AI agents.">
+<meta name="twitter:description" content="1 Z = $0.01. Sub-second finality. 136-byte transactions. Built for users and AI agents.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⓪</text></svg>">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap');
@@ -470,7 +470,7 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
     <p class="subtitle animate delay-2">
       Move pennies at the speed of light.<br>
       A <strong>frictionless microtransaction network</strong> for users and AI agents.<br>
-      1 Z = $0.01. Sub-second finality. 100-byte transactions.
+      1 Z = $0.01. Sub-second finality. 136-byte transactions.
     </p>
     <div class="hero-buttons animate delay-3">
       <a href="https://docs.zzero.net" class="btn">Read the Docs</a>
@@ -499,7 +499,7 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
         <div class="stat-label">Finality</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value">100B</div>
+        <div class="stat-value">136B</div>
         <div class="stat-label">Transaction Size</div>
       </div>
       <div class="stat-item">
@@ -621,12 +621,12 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
       <div class="flow-step">
         <span class="flow-num">02</span>
         <span class="flow-label">TRANSACT</span>
-        <span class="flow-detail">Send 50 Z ($0.50) to any address. 0.01 Z flat fee. &lt;500ms finality. 136 bytes on wire.</span>
+        <span class="flow-detail">Send 10 Z ($0.10) to any address. 0.01 Z flat fee. &lt;500ms finality. 136 bytes on wire.</span>
       </div>
       <div class="flow-step">
         <span class="flow-num">03</span>
         <span class="flow-label">BRIDGE OUT</span>
-        <span class="flow-detail">Burn 450 Z <span class="flow-arrow">-></span> Release 4.50 USDC on any supported L2</span>
+        <span class="flow-detail">Burn 20 Z <span class="flow-arrow">-></span> Release 0.20 USDC on any supported L2. Fee: 0.50 Z.</span>
       </div>
     </div>
     <div style="margin-top: 24px; font-size: 0.8rem; color: var(--text-dim);">
@@ -1066,6 +1066,104 @@ print(result.json())
         <span class="eco-link">github.com/Zzero-net -></span>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- FEES -->
+<section id="fees">
+  <div class="container">
+    <div class="section-label">// Economics</div>
+    <h2 class="section-title">Network Fees</h2>
+    <p class="section-desc">Transparent, predictable, flat fees. No gas auctions. No priority tips. No surprises.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 32px;">
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
+        <div style="color: var(--green); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 12px;">TRANSFER FEE</div>
+        <div style="font-size: 2rem; font-weight: 700; color: var(--white); margin-bottom: 4px;">0.01 Z</div>
+        <div style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 12px;">$0.0001 per transaction</div>
+        <div style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">
+          Flat fee on every transfer. Same whether you send 0.01 Z or 25 Z. Deducted from sender's balance on top of the transfer amount.
+        </div>
+      </div>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
+        <div style="color: var(--cyan); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 12px;">ACCOUNT CREATION</div>
+        <div style="font-size: 2rem; font-weight: 700; color: var(--white); margin-bottom: 4px;">5 Z</div>
+        <div style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 12px;">$0.05 one-time</div>
+        <div style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">
+          Paid once when an account first receives Z. Prevents address-space spam. Deducted from the first incoming transfer. Keypair generation is free.
+        </div>
+      </div>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
+        <div style="color: var(--amber); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 12px;">BRIDGE OUT FEE</div>
+        <div style="font-size: 2rem; font-weight: 700; color: var(--white); margin-bottom: 4px;">0.50 Z</div>
+        <div style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 12px;">$0.005 per withdrawal</div>
+        <div style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">
+          Covers L1/L2 gas costs for releasing stablecoins from the vault contract. Flat fee regardless of withdrawal amount.
+        </div>
+      </div>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
+        <div style="color: var(--green); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 12px;">BRIDGE IN</div>
+        <div style="font-size: 2rem; font-weight: 700; color: var(--white); margin-bottom: 4px;">Free</div>
+        <div style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 12px;">$0.00</div>
+        <div style="color: var(--text); font-size: 0.85rem; line-height: 1.6;">
+          Depositing stablecoins costs nothing on the Zero side. You pay only the L1/L2 gas for the vault transaction. Full amount minted as Z.
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 40px;">
+      <div style="font-size: 0.85rem; color: var(--amber); margin-bottom: 16px; letter-spacing: 1px; font-family: var(--font-mono);">FEE DISTRIBUTION</div>
+      <table class="comparison-table" style="max-width: 600px;">
+        <thead><tr><th>Recipient</th><th>Share</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><span style="color:var(--green)">Validators</span></td><td style="color:var(--green)">70%</td><td>Block production rewards, proportional to stake</td></tr>
+          <tr><td><span style="color:var(--cyan)">Bridge Reserve</span></td><td style="color:var(--cyan)">15%</td><td>Covers gas costs for bridge-out operations</td></tr>
+          <tr><td><span style="color:var(--amber)">Protocol Reserve</span></td><td style="color:var(--amber)">15%</td><td>Development, audits, infrastructure</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <div style="font-size: 0.85rem; color: var(--cyan); margin-bottom: 16px; letter-spacing: 1px; font-family: var(--font-mono);">RATE LIMITS</div>
+      <table class="comparison-table" style="max-width: 600px;">
+        <thead><tr><th>Parameter</th><th>Limit</th></tr></thead>
+        <tbody>
+          <tr><td>Max per transaction</td><td style="color:var(--green)">25 Z ($0.25)</td></tr>
+          <tr><td>Min transfer</td><td>0.01 Z ($0.0001)</td></tr>
+          <tr><td>Min with fee</td><td>0.02 Z ($0.0002)</td></tr>
+          <tr><td>Rate limit per account</td><td>100 tx/s</td></tr>
+          <tr><td>Dust pruning threshold</td><td>&lt;0.10 Z inactive 30 days</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <div style="font-size: 0.85rem; color: var(--green); margin-bottom: 16px; letter-spacing: 1px; font-family: var(--font-mono);">WHAT'S FREE</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+        <div style="padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color: var(--white); font-weight: 600; margin-bottom: 4px;">Keypair Generation</div>
+          <div style="color: var(--text-dim); font-size: 0.85rem;">Create a wallet offline, no transaction needed</div>
+        </div>
+        <div style="padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color: var(--white); font-weight: 600; margin-bottom: 4px;">Bridge In</div>
+          <div style="color: var(--text-dim); font-size: 0.85rem;">Deposit stablecoins, full amount minted as Z</div>
+        </div>
+        <div style="padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color: var(--white); font-weight: 600; margin-bottom: 4px;">Balance Lookups</div>
+          <div style="color: var(--text-dim); font-size: 0.85rem;">Query any account balance via API or SDK</div>
+        </div>
+        <div style="padding: 12px; border: 1px solid var(--border); border-radius: 6px;">
+          <div style="color: var(--white); font-weight: 600; margin-bottom: 4px;">Transaction History</div>
+          <div style="color: var(--text-dim); font-size: 0.85rem;">View transfers, receipts, and account activity</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 

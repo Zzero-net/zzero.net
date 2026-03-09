@@ -518,7 +518,7 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
 <div style="border-bottom: 1px solid var(--border); padding: 20px 0; background: var(--bg);">
   <div class="container">
     <div style="display: flex; flex-wrap: wrap; gap: 24px 40px; justify-content: center; font-size: 0.78rem; color: var(--text-dim);">
-      <span>Account creation: <span style="color:var(--white)">100 Z ($1.00)</span> one-time</span>
+      <span>Account creation: <span style="color:var(--white)">5 Z ($0.05)</span> one-time</span>
       <span>Rate limit: <span style="color:var(--white)">100 tx/s</span> per account</span>
       <span>Dust pruning: <span style="color:var(--white)">&lt;0.10 Z</span> for 30 days</span>
     </div>
@@ -564,7 +564,7 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
           <td class="dim">N/A</td>
           <td class="dim">~110B + gas</td>
           <td class="dim">~200B</td>
-          <td style="color:var(--green)">100 bytes</td>
+          <td style="color:var(--green)">136 bytes</td>
         </tr>
         <tr>
           <td>Gas Token Needed</td>
@@ -621,7 +621,7 @@ footer .copyright { color: var(--text-dim); font-size: 0.7rem; }
       <div class="flow-step">
         <span class="flow-num">02</span>
         <span class="flow-label">TRANSACT</span>
-        <span class="flow-detail">Send 50 Z ($0.50) to any address. 0.01 Z flat fee. &lt;500ms finality. 100 bytes on wire.</span>
+        <span class="flow-detail">Send 50 Z ($0.50) to any address. 0.01 Z flat fee. &lt;500ms finality. 136 bytes on wire.</span>
       </div>
       <div class="flow-step">
         <span class="flow-num">03</span>
@@ -746,7 +746,7 @@ console.<span class="func">log</span>(<span class="keyword">await</span> w.<span
 <section>
   <div class="container">
     <div class="section-label">// Wire Format</div>
-    <h2 class="section-title">100 Bytes. Nothing More.</h2>
+    <h2 class="section-title">136 Bytes. Nothing More.</h2>
     <p class="section-desc">No opcodes. No gas. No contract addresses. No calldata. Just: move X pennies from A to B.</p>
     <div class="code-block" style="max-width: 600px;">
 <span class="keyword">ZeroTransfer</span> {
@@ -754,9 +754,9 @@ console.<span class="func">log</span>(<span class="keyword">await</span> w.<span
     to:        [<span class="num">32</span> bytes]  <span class="comment">// Ed25519 public key</span>
     amount:    [<span class="num"> 4</span> bytes]  <span class="comment">// u32, penny units</span>
     nonce:     [<span class="num"> 4</span> bytes]  <span class="comment">// u32, replay protection</span>
-    signature: [<span class="num">28</span> bytes]  <span class="comment">// Ed25519 truncated</span>
+    signature: [<span class="num">64</span> bytes]  <span class="comment">// Ed25519 full signature</span>
 }
-<span class="comment">// Total: 100 bytes</span>
+<span class="comment">// Total: 136 bytes</span>
     </div>
   </div>
 </section>
